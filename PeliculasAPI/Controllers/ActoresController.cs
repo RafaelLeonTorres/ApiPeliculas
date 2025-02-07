@@ -88,56 +88,69 @@ namespace PeliculasAPI.Controllers
 
         [HttpPost]
         public async Task<ActionResult> Post([FromForm] ActorCreacionDTO actorCreacioDTO)
-        {              
-            var actor = Mapper.Map<Actor>(actorCreacioDTO);
-
-            if (actorCreacioDTO.Foto is not null) 
-            {
-                var url = await AlmacenadorArchivos.Almacenar(ConstantesString.contenedorActores, actorCreacioDTO.Foto);
-                actor.Foto = url;
-            }
-
-               
-            context.Add(actor);
-            await context.SaveChangesAsync();
-
-            // Invalidar la caché
-            await OutputCacheStore.EvictByTagAsync(ConstantesString.cacheTagActores, default);
-            return NoContent();
-        }
-
-        [HttpPut("{id:int}")]
-        public async Task<IActionResult> Put(int id, [FromBody] GeneroCreacionDTO generoCreacionDTO)
         {
             try
             {
-                if (generoCreacionDTO == null)
+                var actor = Mapper.Map<Actor>(actorCreacioDTO);
+
+                if (actorCreacioDTO.Foto is not null)
                 {
-                    Logger.LogWarning("El DTO de actualización de género es nulo.");
-                    return BadRequest("El DTO de actualización de género no puede ser nulo.");
+                    var url = await AlmacenadorArchivos.Almacenar(ConstantesString.contenedorActores, actorCreacioDTO.Foto);
+                    actor.Foto = url;
                 }
 
-                var generoExiste = await context.Generos.AnyAsync(g => g.Id == id);
 
-                if (!generoExiste)
+                context.Add(actor);
+                await context.SaveChangesAsync();
+
+                // Invalidar la caché
+                await OutputCacheStore.EvictByTagAsync(ConstantesString.cacheTagActores, default);
+                return NoContent();
+            }
+            catch (Exception ex) 
+            {
+                Logger.LogError(ex, "Error al crear el actor: "+ actorCreacioDTO.Nombre);
+                return StatusCode(500, "Ocurrió un error interno al procesar la solicitud.");
+            }            
+        }
+
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> Put(int id, [FromForm] ActorCreacionDTO actorCreacionDTO)
+        {
+            try
+            {
+                if (actorCreacionDTO == null)
                 {
-                    Logger.LogWarning("No se encontró el género con ID {Id} para actualizar.", id);
+                    Logger.LogWarning("El DTO de actualización de actor es nulo.");
+                    return BadRequest("El DTO de actualización de actor no puede ser nulo.");
+                }
+
+                var actor = await context.Actores.FirstOrDefaultAsync(g => g.Id == id);
+
+                if (actor is null)
+                {
+                    Logger.LogWarning("No se encontró el actor con ID {Id} para actualizar.", id);
                     return NotFound();
                 }
 
-                var genero = Mapper.Map<Genero>(generoCreacionDTO);
-                genero.Id = id;
+                // se actualiza con el savechangesasync
+                actor = Mapper.Map(actorCreacionDTO, actor);
 
-                context.Update(genero);
+                if (actorCreacionDTO.Foto is not null) 
+                {
+                    actor.Foto = await AlmacenadorArchivos.Editar(actor.Foto, ConstantesString.contenedorActores,
+                        actorCreacionDTO.Foto);
+                }
+
                 await context.SaveChangesAsync();
-                await OutputCacheStore.EvictByTagAsync(ConstantesString.cacheTagGeneros, default);
+                await OutputCacheStore.EvictByTagAsync(ConstantesString.cacheTagActores, default);
 
-                Logger.LogInformation("Se actualizó el género con ID {Id}.", id);
+                Logger.LogInformation("Se actualizó el actor con ID {Id}.", id);
                 return NoContent();
             }
             catch (Exception ex)
             {
-                Logger.LogError(ex, "Error al actualizar el género con ID {Id}.", id);
+                Logger.LogError(ex, "Error al actualizar el actor con ID {Id}.", id);
                 return StatusCode(500, "Ocurrió un error interno al procesar la solicitud.");
             }
         }
@@ -147,19 +160,31 @@ namespace PeliculasAPI.Controllers
         {
             try
             {
-                var registrosBorrados = await context.Generos
+                var actoresABorrar = await context.Actores.Where(g => g.Id == id).ToListAsync();
+
+                var actoresBorrados = await context.Actores
                     .Where(g => g.Id == id)
                     .ExecuteDeleteAsync();
 
-                if (registrosBorrados == 0)
+                if (actoresBorrados == 0)
                 {
-                    Logger.LogWarning("No se encontró el género con ID {Id} para eliminar.", id);
-                    return NotFound("No se encontró el género con ID {Id} para eliminar. " + id);
+                    Logger.LogWarning("No se encontró el actor con ID {Id} para eliminar.", id);
+                    return NotFound("No se encontró el actor con ID {Id} para eliminar. " + id);
                 }
 
-                await OutputCacheStore.EvictByTagAsync(ConstantesString.cacheTagGeneros, default);
 
-                Logger.LogInformation("Se eliminó el género con ID {Id}.", id);
+                if (actoresABorrar is not null && actoresABorrar.Count > 0) 
+                {
+                    foreach (var item in actoresABorrar)
+                    {
+                        AlmacenadorArchivos?.Borrar(item.Foto, ConstantesString.contenedorActores);
+                    }
+                }
+                
+
+                await OutputCacheStore.EvictByTagAsync(ConstantesString.cacheTagActores, default);
+
+                Logger.LogInformation("Se eliminó el actor con ID {Id}.", id);
                 return NoContent();
             }
             catch (Exception ex)

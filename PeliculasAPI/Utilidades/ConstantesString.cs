@@ -4,7 +4,7 @@
     {
         //Contantes para el cache
         public const string cacheTagGeneros = "generos";
-        public const string cacheTagActores = "generos";
+        public const string cacheTagActores = "actores";
         //Contenedores 
         public const string contenedorActores = "actores";
     }

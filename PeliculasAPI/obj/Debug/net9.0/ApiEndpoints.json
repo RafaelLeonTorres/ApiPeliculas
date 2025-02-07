@@ -97,9 +97,19 @@
         "IsRequired": true
       },
       {
-        "Name": "generoCreacionDTO",
-        "Type": "PeliculasAPI.DTOs.GeneroCreacionDTO",
-        "IsRequired": true
+        "Name": "Nombre",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "FechaNacimiento",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "Foto",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
