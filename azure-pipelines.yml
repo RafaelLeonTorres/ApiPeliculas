@@ -1,7 +1,5 @@
 # ASP.NET Core
-# Build and test ASP.NET Core projects targeting .NET Core.
-# Add steps that run tests, create a NuGet package, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+# Build, test, and publish ASP.NET Core projects targeting .NET 9.
 
 trigger:
 - main
@@ -13,5 +11,29 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '9.x'
+    installationPath: $(Agent.ToolsDirectory)/dotnet
+
+# Restaura los paquetes NuGet
+- script: dotnet restore
+  displayName: 'dotnet restore'
+
+# Compila el proyecto
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
+
+# Ejecuta pruebas unitarias
+- script: dotnet test --configuration $(buildConfiguration)
+  displayName: 'Run unit tests'
+
+# Publica la API
+- script: dotnet publish --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)
+  displayName: 'dotnet publish'
+
+# Sube los artefactos de la publicación
+- publish: $(Build.ArtifactStagingDirectory)
+  artifact: drop
+
