@@ -13,7 +13,7 @@ namespace PeliculasAPI.Utilidades
             else 
             {
                 double cantidad = await queryable.CountAsync();
-                httpContext.Response.Headers.Append("cantidad-total-reistros", cantidad.ToString());
+                httpContext.Response.Headers.Append("cantidad-total-registros", cantidad.ToString());
             }
         }
     }

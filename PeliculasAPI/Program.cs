@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PeliculasAPI.Data;
 using PeliculasAPI.Servicios;
 
@@ -22,7 +22,10 @@ builder.Services.AddOutputCache(opciones =>
     opciones.DefaultExpirationTimeSpan = TimeSpan.FromSeconds(60);
 });
 
-var AllowedHosts = builder.Configuration.GetValue<string>("OriginesPermitidos")!.Split(',');
+var AllowedHosts = builder.Configuration.GetValue<string>("OriginesPermitidos")!
+    .Split(',')
+    .Select(o => o.Trim())
+    .ToArray();
 
 builder.Services.AddCors(opciones =>
 {
@@ -38,11 +41,11 @@ builder.Services.AddTransient<IAlmacenadorArchivos, AlmacenadorArchivosAzure>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+//}
 
 app.UseHttpsRedirection();
 
