@@ -53,7 +53,7 @@ namespace PeliculasAPI.Controllers
             catch (Exception ex)
             {
                 Logger.LogError(ex, "Error al obtener los géneros.");
-                return StatusCode(500, "Ocurrió un error interno al procesar la solicitud.");
+                return StatusCode(500, ex);
             }
         }
 
@@ -79,7 +79,7 @@ namespace PeliculasAPI.Controllers
             catch (Exception ex)
             {
                 Logger.LogError(ex, "Error al obtener el género con ID {Id}.", id);
-                return StatusCode(500, "Ocurrió un error interno al procesar la solicitud.");
+                return StatusCode(500, ex);
             }
         }
 
@@ -132,7 +132,7 @@ namespace PeliculasAPI.Controllers
             {
                 // Registrar el error
                 Logger.LogError(ex, "Error al crear un nuevo género.");
-                return StatusCode(500, "Ocurrió un error interno al procesar la solicitud.");
+                return StatusCode(500, ex);
             }
         }
 
@@ -168,7 +168,7 @@ namespace PeliculasAPI.Controllers
             catch (Exception ex)
             {
                 Logger.LogError(ex, "Error al actualizar el género con ID {Id}.", id);
-                return StatusCode(500, "Ocurrió un error interno al procesar la solicitud.");
+                return StatusCode(500, ex);
             }
         }
 
@@ -195,7 +195,7 @@ namespace PeliculasAPI.Controllers
             catch (Exception ex)
             {
                 Logger.LogError(ex, "Error al eliminar el género con ID {Id}.", id);
-                return StatusCode(500, "Ocurrió un error interno al procesar la solicitud.");
+                return StatusCode(500, ex);
             }
         }
     }

@@ -3,28 +3,27 @@
   "WorkspaceRootPath": "F:\\Respaldo\\Respaldo\\Cursos\\Angular 18 y ASP.NET Core 9\\PeliculasAPI\\api\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9EDDDBD1-BF27-4428-85BB-23CECF6B4F30}|PeliculasAPI\\PeliculasAPI.csproj|f:\\respaldo\\respaldo\\cursos\\angular 18 y asp.net core 9\\peliculasapi\\api\\peliculasapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9EDDDBD1-BF27-4428-85BB-23CECF6B4F30}|PeliculasAPI\\PeliculasAPI.csproj|solutionrelative:peliculasapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9EDDDBD1-BF27-4428-85BB-23CECF6B4F30}|PeliculasAPI\\PeliculasAPI.csproj|f:\\respaldo\\respaldo\\cursos\\angular 18 y asp.net core 9\\peliculasapi\\api\\peliculasapi\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{9EDDDBD1-BF27-4428-85BB-23CECF6B4F30}|PeliculasAPI\\PeliculasAPI.csproj|solutionrelative:peliculasapi\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9EDDDBD1-BF27-4428-85BB-23CECF6B4F30}|PeliculasAPI\\PeliculasAPI.csproj|f:\\respaldo\\respaldo\\cursos\\angular 18 y asp.net core 9\\peliculasapi\\api\\peliculasapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{9EDDDBD1-BF27-4428-85BB-23CECF6B4F30}|PeliculasAPI\\PeliculasAPI.csproj|solutionrelative:peliculasapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{9EDDDBD1-BF27-4428-85BB-23CECF6B4F30}|PeliculasAPI\\PeliculasAPI.csproj|f:\\respaldo\\respaldo\\cursos\\angular 18 y asp.net core 9\\peliculasapi\\api\\peliculasapi\\controllers\\generoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9EDDDBD1-BF27-4428-85BB-23CECF6B4F30}|PeliculasAPI\\PeliculasAPI.csproj|solutionrelative:peliculasapi\\controllers\\generoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9EDDDBD1-BF27-4428-85BB-23CECF6B4F30}|PeliculasAPI\\PeliculasAPI.csproj|f:\\respaldo\\respaldo\\cursos\\angular 18 y asp.net core 9\\peliculasapi\\api\\peliculasapi\\controllers\\actorescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9EDDDBD1-BF27-4428-85BB-23CECF6B4F30}|PeliculasAPI\\PeliculasAPI.csproj|solutionrelative:peliculasapi\\controllers\\actorescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9EDDDBD1-BF27-4428-85BB-23CECF6B4F30}|PeliculasAPI\\PeliculasAPI.csproj|f:\\respaldo\\respaldo\\cursos\\angular 18 y asp.net core 9\\peliculasapi\\api\\peliculasapi\\utilidades\\httpcontextextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9EDDDBD1-BF27-4428-85BB-23CECF6B4F30}|PeliculasAPI\\PeliculasAPI.csproj|solutionrelative:peliculasapi\\utilidades\\httpcontextextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9EDDDBD1-BF27-4428-85BB-23CECF6B4F30}|PeliculasAPI\\PeliculasAPI.csproj|f:\\respaldo\\respaldo\\cursos\\angular 18 y asp.net core 9\\peliculasapi\\api\\peliculasapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9EDDDBD1-BF27-4428-85BB-23CECF6B4F30}|PeliculasAPI\\PeliculasAPI.csproj|solutionrelative:peliculasapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9EDDDBD1-BF27-4428-85BB-23CECF6B4F30}|PeliculasAPI\\PeliculasAPI.csproj|f:\\respaldo\\respaldo\\cursos\\angular 18 y asp.net core 9\\peliculasapi\\api\\peliculasapi\\controllers\\generoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9EDDDBD1-BF27-4428-85BB-23CECF6B4F30}|PeliculasAPI\\PeliculasAPI.csproj|solutionrelative:peliculasapi\\controllers\\generoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\rafik\\AppData\\Local\\Temp\\Rar$DIa65520.10310\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9EDDDBD1-BF27-4428-85BB-23CECF6B4F30}|PeliculasAPI\\PeliculasAPI.csproj|f:\\respaldo\\respaldo\\cursos\\angular 18 y asp.net core 9\\peliculasapi\\api\\peliculasapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{9EDDDBD1-BF27-4428-85BB-23CECF6B4F30}|PeliculasAPI\\PeliculasAPI.csproj|solutionrelative:peliculasapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9EDDDBD1-BF27-4428-85BB-23CECF6B4F30}|PeliculasAPI\\PeliculasAPI.csproj|f:\\respaldo\\respaldo\\cursos\\angular 18 y asp.net core 9\\peliculasapi\\api\\peliculasapi\\utilidades\\httpcontextextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9EDDDBD1-BF27-4428-85BB-23CECF6B4F30}|PeliculasAPI\\PeliculasAPI.csproj|solutionrelative:peliculasapi\\utilidades\\httpcontextextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9EDDDBD1-BF27-4428-85BB-23CECF6B4F30}|PeliculasAPI\\PeliculasAPI.csproj|f:\\respaldo\\respaldo\\cursos\\angular 18 y asp.net core 9\\peliculasapi\\api\\peliculasapi\\utilidades\\automapperprofiles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -54,7 +53,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -62,7 +61,18 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\rafik\\AppData\\Local\\Temp\\Rar$DIa65520.10310\\appsettings.json",
+              "ToolTip": "C:\\Users\\rafik\\AppData\\Local\\Temp\\Rar$DIa65520.10310\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-04-24T17:13:13.789Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "HttpContextExtensions.cs",
               "DocumentMoniker": "F:\\Respaldo\\Respaldo\\Cursos\\Angular 18 y ASP.NET Core 9\\PeliculasAPI\\api\\PeliculasAPI\\Utilidades\\HttpContextExtensions.cs",
               "RelativeDocumentMoniker": "PeliculasAPI\\Utilidades\\HttpContextExtensions.cs",
@@ -74,51 +84,39 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 0,
               "Title": "GenerosController.cs",
               "DocumentMoniker": "F:\\Respaldo\\Respaldo\\Cursos\\Angular 18 y ASP.NET Core 9\\PeliculasAPI\\api\\PeliculasAPI\\Controllers\\GenerosController.cs",
               "RelativeDocumentMoniker": "PeliculasAPI\\Controllers\\GenerosController.cs",
               "ToolTip": "F:\\Respaldo\\Respaldo\\Cursos\\Angular 18 y ASP.NET Core 9\\PeliculasAPI\\api\\PeliculasAPI\\Controllers\\GenerosController.cs",
               "RelativeToolTip": "PeliculasAPI\\Controllers\\GenerosController.cs",
-              "ViewState": "AgIAABkAAAAAAAAAAAAcwCcAAAAQAAAAAAAAAA==",
+              "ViewState": "AgIAAKkAAAAAAAAAAAAAwMUAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-13T16:26:23.507Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "appsettings.Development.json",
-              "DocumentMoniker": "F:\\Respaldo\\Respaldo\\Cursos\\Angular 18 y ASP.NET Core 9\\PeliculasAPI\\api\\PeliculasAPI\\appsettings.Development.json",
-              "RelativeDocumentMoniker": "PeliculasAPI\\appsettings.Development.json",
-              "ToolTip": "F:\\Respaldo\\Respaldo\\Cursos\\Angular 18 y ASP.NET Core 9\\PeliculasAPI\\api\\PeliculasAPI\\appsettings.Development.json",
-              "RelativeToolTip": "PeliculasAPI\\appsettings.Development.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-02-10T19:47:59.832Z",
+              "WhenOpened": "2025-02-13T16:26:23.507Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "F:\\Respaldo\\Respaldo\\Cursos\\Angular 18 y ASP.NET Core 9\\PeliculasAPI\\api\\PeliculasAPI\\Program.cs",
               "RelativeDocumentMoniker": "PeliculasAPI\\Program.cs",
               "ToolTip": "F:\\Respaldo\\Respaldo\\Cursos\\Angular 18 y ASP.NET Core 9\\PeliculasAPI\\api\\PeliculasAPI\\Program.cs",
               "RelativeToolTip": "PeliculasAPI\\Program.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-10T17:15:32.027Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "appsettings.json",
               "DocumentMoniker": "F:\\Respaldo\\Respaldo\\Cursos\\Angular 18 y ASP.NET Core 9\\PeliculasAPI\\api\\PeliculasAPI\\appsettings.json",
               "RelativeDocumentMoniker": "PeliculasAPI\\appsettings.json",
               "ToolTip": "F:\\Respaldo\\Respaldo\\Cursos\\Angular 18 y ASP.NET Core 9\\PeliculasAPI\\api\\PeliculasAPI\\appsettings.json",
               "RelativeToolTip": "PeliculasAPI\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2025-02-10T17:13:04.756Z",
               "EditorCaption": ""
@@ -185,15 +183,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "ActoresController.cs",
               "DocumentMoniker": "F:\\Respaldo\\Respaldo\\Cursos\\Angular 18 y ASP.NET Core 9\\PeliculasAPI\\api\\PeliculasAPI\\Controllers\\ActoresController.cs",
               "RelativeDocumentMoniker": "PeliculasAPI\\Controllers\\ActoresController.cs",
               "ToolTip": "F:\\Respaldo\\Respaldo\\Cursos\\Angular 18 y ASP.NET Core 9\\PeliculasAPI\\api\\PeliculasAPI\\Controllers\\ActoresController.cs",
               "RelativeToolTip": "PeliculasAPI\\Controllers\\ActoresController.cs",
-              "ViewState": "AgIAABoAAAAAAAAAAAAIwCoAAAAQAAAAAAAAAA==",
+              "ViewState": "AgIAAH8AAAAAAAAAAAAuwMAAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-05T16:22:23.306Z"
+              "WhenOpened": "2025-02-05T16:22:23.306Z",
+              "EditorCaption": ""
             }
           ]
         }

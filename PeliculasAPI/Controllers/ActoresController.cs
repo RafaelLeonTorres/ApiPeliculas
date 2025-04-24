@@ -56,7 +56,7 @@ namespace PeliculasAPI.Controllers
             catch (Exception ex)
             {
                 Logger.LogError(ex, "Error al obtener los actores.");
-                return StatusCode(500, "Ocurrió un error interno al procesar la solicitud.");
+                return StatusCode(500, ex);
             }
         }
 
@@ -82,7 +82,7 @@ namespace PeliculasAPI.Controllers
             catch (Exception ex)
             {
                 Logger.LogError(ex, "Error al obtener el actor con ID {Id}.", id);
-                return StatusCode(500, "Ocurrió un error interno al procesar la solicitud.");
+                return StatusCode(500, ex);
             }
         }
 
@@ -110,7 +110,7 @@ namespace PeliculasAPI.Controllers
             catch (Exception ex) 
             {
                 Logger.LogError(ex, "Error al crear el actor: "+ actorCreacioDTO.Nombre);
-                return StatusCode(500, "Ocurrió un error interno al procesar la solicitud.");
+                return StatusCode(500, ex);
             }            
         }
 
@@ -151,7 +151,7 @@ namespace PeliculasAPI.Controllers
             catch (Exception ex)
             {
                 Logger.LogError(ex, "Error al actualizar el actor con ID {Id}.", id);
-                return StatusCode(500, "Ocurrió un error interno al procesar la solicitud.");
+                return StatusCode(500, ex);
             }
         }
 
@@ -190,7 +190,7 @@ namespace PeliculasAPI.Controllers
             catch (Exception ex)
             {
                 Logger.LogError(ex, "Error al eliminar el género con ID {Id}.", id);
-                return StatusCode(500, "Ocurrió un error interno al procesar la solicitud.");
+                return StatusCode(500, ex);
             }
         }
     }
