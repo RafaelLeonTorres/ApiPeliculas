@@ -40,26 +40,7 @@ namespace PeliculasAPI.Controllers
         public async Task<ActionResult<IEnumerable<ActorDTO>>> Get([FromQuery] PaginacionDTO paginacion)
         {
             try
-            {
-                // 1. Validar conexión a la base de datos
-                if (!await context.Database.CanConnectAsync())
-                {
-                    try
-                    {
-                        using var ping = new System.Net.NetworkInformation.Ping();
-                        var reply = ping.Send("databaseserversql1.database.windows.net");
-                        if (reply.Status != System.Net.NetworkInformation.IPStatus.Success)
-                        {
-                            return StatusCode(500, $"No se puede alcanzar el servidor. Estado: {reply.Status}");
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        return StatusCode(500, $"Error de red: {ex.Message}");
-                    }
-                }
-
-                // Continuar con la lógica original
+            {            
                 var queryable = context.Actores.AsQueryable();
                 await HttpContext.InsertarParametrosPaginacionEnCabecera(queryable);
 
@@ -72,11 +53,6 @@ namespace PeliculasAPI.Controllers
 
                 Logger.LogInformation("Se obtuvieron {Count} actores exitosamente.", actores.Count);
                 return Ok(actores);
-            }
-            catch (SqlException sqlEx) when (sqlEx.Number == 208) // Error específico de tabla no existe en SQL Server
-            {
-                Logger.LogError(sqlEx, "La tabla Actores no existe en la base de datos.");
-                return StatusCode(500, "La tabla Actores no existe.");
             }
             catch (Exception ex)
             {
