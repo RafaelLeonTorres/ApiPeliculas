@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PeliculasAPI.Data;
@@ -40,6 +41,54 @@ namespace PeliculasAPI.Controllers
         {
             try
             {
+                // 1. Validar conexión a la base de datos
+                if (!await context.Database.CanConnectAsync())
+                {
+                    Logger.LogError("No se pudo establecer conexión con la base de datos.");
+                    return StatusCode(500, "Error de conexión a la base de datos.");
+                }
+
+                // 2. Validar existencia de la tabla Actores
+                var entityType = context.Model.FindEntityType(typeof(Actor));
+                if (entityType == null)
+                {
+                    Logger.LogError("La entidad Actor no está configurada en el contexto.");
+                    return StatusCode(500, "Error interno de configuración.");
+                }
+
+                var tableName = entityType.GetTableName();
+                var schemaName = entityType.GetSchema() ?? "dbo"; // Esquema predeterminado si es null
+
+                var connection = context.Database.GetDbConnection();
+                await using var command = connection.CreateCommand();
+                command.CommandText = @"
+            SELECT COUNT(*) 
+            FROM INFORMATION_SCHEMA.TABLES 
+            WHERE TABLE_NAME = @TableName 
+            AND TABLE_SCHEMA = @Schema";
+
+                var paramTable = command.CreateParameter();
+                paramTable.ParameterName = "@TableName";
+                paramTable.Value = tableName;
+                command.Parameters.Add(paramTable);
+
+                var paramSchema = command.CreateParameter();
+                paramSchema.ParameterName = "@Schema";
+                paramSchema.Value = schemaName;
+                command.Parameters.Add(paramSchema);
+
+                if (connection.State != System.Data.ConnectionState.Open)
+                    await connection.OpenAsync();
+
+                var tableExists = (int)await command.ExecuteScalarAsync() > 0;
+
+                if (!tableExists)
+                {
+                    Logger.LogError("La tabla {TableName} no existe en el esquema {Schema}.", tableName, schemaName);
+                    return StatusCode(500, "La tabla requerida no existe.");
+                }
+
+                // Continuar con la lógica original
                 var queryable = context.Actores.AsQueryable();
                 await HttpContext.InsertarParametrosPaginacionEnCabecera(queryable);
 
@@ -53,10 +102,15 @@ namespace PeliculasAPI.Controllers
                 Logger.LogInformation("Se obtuvieron {Count} actores exitosamente.", actores.Count);
                 return Ok(actores);
             }
+            catch (SqlException sqlEx) when (sqlEx.Number == 208) // Error específico de tabla no existe en SQL Server
+            {
+                Logger.LogError(sqlEx, "La tabla Actores no existe en la base de datos.");
+                return StatusCode(500, "La tabla Actores no existe.");
+            }
             catch (Exception ex)
             {
                 Logger.LogError(ex, "Error al obtener los actores.");
-                return StatusCode(500, ex);
+                return StatusCode(500, ex.Message);
             }
         }
 
