@@ -14,7 +14,7 @@ using PeliculasAPI.Utilidades;
 namespace PeliculasAPI.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
+    [ApiController] 
     public class ActoresController : ControllerBase
     {
         private readonly IOutputCacheStore OutputCacheStore;
