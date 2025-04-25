@@ -44,10 +44,19 @@ namespace PeliculasAPI.Controllers
                 // 1. Validar conexión a la base de datos
                 if (!await context.Database.CanConnectAsync())
                 {
-                    var connectionString = context.Database.GetDbConnection().ConnectionString;
-                    var dataSource = context.Database.GetDbConnection().DataSource;
-                    var database = context.Database.GetDbConnection().Database;;
-                    return StatusCode(500, string.Concat($"Detalles de conexión: ConectionString={connectionString} DataSource={dataSource}, Database={database}"));
+                    try
+                    {
+                        using var ping = new System.Net.NetworkInformation.Ping();
+                        var reply = ping.Send("databaseserversql1.database.windows.net");
+                        if (reply.Status != System.Net.NetworkInformation.IPStatus.Success)
+                        {
+                            return StatusCode(500, $"No se puede alcanzar el servidor. Estado: {reply.Status}");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        return StatusCode(500, $"Error de red: {ex.Message}");
+                    }
                 }
 
                 // Continuar con la lógica original
