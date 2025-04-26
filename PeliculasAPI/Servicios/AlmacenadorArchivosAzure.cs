@@ -6,7 +6,7 @@ namespace PeliculasAPI.Servicios
 {
     public class AlmacenadorArchivosAzure : IAlmacenadorArchivos
     {
-        private string connectionString;
+        private readonly string connectionString;
         public ILogger Logger { get; }
         public AlmacenadorArchivosAzure(IConfiguration configuration, ILogger<AlmacenadorArchivosAzure> logger)
         {
@@ -24,7 +24,7 @@ namespace PeliculasAPI.Servicios
 
                 // Crea el contenedor si no existe.
                 await cliente.CreateIfNotExistsAsync();
-                cliente.SetAccessPolicy(PublicAccessType.Blob);
+                await cliente.SetAccessPolicyAsync(PublicAccessType.Blob);
 
                 // Obtener la extensión y crear un nombre único para el archivo.
                 var extension = Path.GetExtension(archivo.FileName);

@@ -20,11 +20,11 @@ namespace PeliculasAPI.Controllers
     {
         private readonly IOutputCacheStore OutputCacheStore;
         private readonly ApplicationDbContext context;
-        private readonly ILogger<GenerosController> Logger;
+        private readonly ILogger<ActoresController> Logger;
         private readonly IMapper Mapper;
         private readonly IAlmacenadorArchivos AlmacenadorArchivos;
 
-        public ActoresController(IOutputCacheStore outputCacheStore, ApplicationDbContext applicationDbContext, ILogger<GenerosController> logger,
+        public ActoresController(IOutputCacheStore outputCacheStore, ApplicationDbContext applicationDbContext, ILogger<ActoresController> logger,
             IMapper mapper, IAlmacenadorArchivos almacenadorArchivos)
         {
             OutputCacheStore = outputCacheStore;
@@ -40,16 +40,19 @@ namespace PeliculasAPI.Controllers
         public async Task<ActionResult<IEnumerable<ActorDTO>>> Get([FromQuery] PaginacionDTO paginacion)
         {
             try
-            {            
-                var queryable = context.Actores.AsQueryable();
-                await HttpContext.InsertarParametrosPaginacionEnCabecera(queryable);
+            {
+                var actores = await RetryHelper.ExecuteWithRetryAsync(async () =>
+                {
+                    var queryable = context.Actores.AsQueryable();
+                    await HttpContext.InsertarParametrosPaginacionEnCabecera(queryable);
 
-                var actores = await queryable
-                    .OrderBy(g => g.Nombre)
-                    .Paginar(paginacion)
-                    .ProjectTo<ActorDTO>(Mapper.ConfigurationProvider)
-                    .OrderBy(x => x.Nombre)
-                    .ToListAsync();
+                    return await queryable
+                        .OrderBy(g => g.Nombre)
+                        .Paginar(paginacion)
+                        .ProjectTo<ActorDTO>(Mapper.ConfigurationProvider)
+                        .OrderBy(x => x.Nombre)
+                        .ToListAsync();
+                });
 
                 Logger.LogInformation("Se obtuvieron {Count} actores exitosamente.", actores.Count);
                 return Ok(actores);
@@ -61,15 +64,20 @@ namespace PeliculasAPI.Controllers
             }
         }
 
+
         [HttpGet("{id:int}", Name = "Se creo el actor")]
         [OutputCache(Tags = new[] { ConstantesString.cacheTagActores })]
         public async Task<ActionResult<ActorDTO>> GetById(int id)
         {
             try
             {
-                var actor = await context.Actores
-                    .ProjectTo<ActorDTO>(Mapper.ConfigurationProvider)
-                    .FirstOrDefaultAsync(g => g.Id == id);
+                var actor = await RetryHelper.ExecuteWithRetryAsync(async () =>
+                {
+                    return await context.Actores
+                   .ProjectTo<ActorDTO>(Mapper.ConfigurationProvider)
+                   .FirstOrDefaultAsync(g => g.Id == id);                
+                });   
+               
 
                 if (actor == null)
                 {
@@ -96,7 +104,11 @@ namespace PeliculasAPI.Controllers
 
                 if (actorCreacioDTO.Foto is not null)
                 {
-                    var url = await AlmacenadorArchivos.Almacenar(ConstantesString.contenedorActores, actorCreacioDTO.Foto);
+                    var url = await RetryHelper.ExecuteWithRetryAsync(async () => 
+                    {
+                        return await AlmacenadorArchivos.Almacenar(ConstantesString.contenedorActores, actorCreacioDTO.Foto); 
+                    });
+                    
                     actor.Foto = url;
                 }
 
@@ -110,7 +122,7 @@ namespace PeliculasAPI.Controllers
             }
             catch (Exception ex) 
             {
-                Logger.LogError(ex, "Error al crear el actor: "+ actorCreacioDTO.Nombre);
+                Logger.LogError(ex, string.Concat("Error al crear el actor: ", actorCreacioDTO.Nombre));
                 return StatusCode(500, ex);
             }            
         }
@@ -126,7 +138,9 @@ namespace PeliculasAPI.Controllers
                     return BadRequest("El DTO de actualización de actor no puede ser nulo.");
                 }
 
-                var actor = await context.Actores.FirstOrDefaultAsync(g => g.Id == id);
+                var actor = await RetryHelper.ExecuteWithRetryAsync(async () => {
+                    return await context.Actores.FirstOrDefaultAsync(g => g.Id == id);
+                });
 
                 if (actor is null)
                 {
@@ -139,8 +153,11 @@ namespace PeliculasAPI.Controllers
 
                 if (actorCreacionDTO.Foto is not null) 
                 {
-                    actor.Foto = await AlmacenadorArchivos.Editar(actor.Foto, ConstantesString.contenedorActores,
+                    actor.Foto = await RetryHelper.ExecuteWithRetryAsync(async () =>
+                    {
+                        return await AlmacenadorArchivos.Editar(actor.Foto, ConstantesString.contenedorActores,
                         actorCreacionDTO.Foto);
+                     });
                 }
 
                 await context.SaveChangesAsync();
@@ -161,11 +178,18 @@ namespace PeliculasAPI.Controllers
         {
             try
             {
-                var actoresABorrar = await context.Actores.Where(g => g.Id == id).ToListAsync();
+                var actoresABorrar = await RetryHelper.ExecuteWithRetryAsync(async () =>
+                {
+                    return await context.Actores.Where(g => g.Id == id).ToListAsync();
 
-                var actoresBorrados = await context.Actores
-                    .Where(g => g.Id == id)
-                    .ExecuteDeleteAsync();
+                });
+                var actoresBorrados = await RetryHelper.ExecuteWithRetryAsync(async () =>
+                {
+                    return await context.Actores
+                                    .Where(g => g.Id == id)
+                                    .ExecuteDeleteAsync();
+                });
+                
 
                 if (actoresBorrados == 0)
                 {
@@ -178,7 +202,10 @@ namespace PeliculasAPI.Controllers
                 {
                     foreach (var item in actoresABorrar)
                     {
-                        AlmacenadorArchivos?.Borrar(item.Foto, ConstantesString.contenedorActores);
+                        await RetryHelper.ExecuteWithRetryAsync(async () =>
+                        {
+                            await AlmacenadorArchivos.Borrar(item.Foto, ConstantesString.contenedorActores);
+                        });
                     }
                 }
                 

@@ -40,12 +40,15 @@ namespace PeliculasAPI.Controllers
                 var queryable = context.Generos.AsQueryable();
                 await HttpContext.InsertarParametrosPaginacionEnCabecera(queryable);
 
-                var generos = await queryable
-                    .OrderBy(g => g.Nombre)
-                    .Paginar(paginacion)
-                    .ProjectTo<GeneroDTO>(Mapper.ConfigurationProvider)
-                    .OrderBy(x => x.Nombre)
-                    .ToListAsync();
+                var generos = await RetryHelper.ExecuteWithRetryAsync(async () =>
+                {
+                    return await queryable
+                                    .OrderBy(g => g.Nombre)
+                                    .Paginar(paginacion)
+                                    .ProjectTo<GeneroDTO>(Mapper.ConfigurationProvider)
+                                    .OrderBy(x => x.Nombre)
+                                    .ToListAsync();
+                });
 
                 Logger.LogInformation("Se obtuvieron {Count} géneros exitosamente.", generos.Count);
                 return Ok(generos);
@@ -63,9 +66,12 @@ namespace PeliculasAPI.Controllers
         {
             try
             {
-                var genero = await context.Generos
-                    .ProjectTo<GeneroDTO>(Mapper.ConfigurationProvider)
-                    .FirstOrDefaultAsync(g => g.Id == id);
+                var genero = await RetryHelper.ExecuteWithRetryAsync(async () =>
+                {
+                    return await context.Generos
+                                    .ProjectTo<GeneroDTO>(Mapper.ConfigurationProvider)
+                                    .FirstOrDefaultAsync(g => g.Id == id);
+                });
 
                 if (genero == null)
                 {
@@ -103,8 +109,11 @@ namespace PeliculasAPI.Controllers
                 }
 
                 // Verificar si ya existe un género con el mismo nombre
-                var generoExistente = await context.Generos
-                    .AnyAsync(g => g.Nombre.ToLower() == generoCreacionDTO.Nombre.ToLower());
+                var generoExistente = await RetryHelper.ExecuteWithRetryAsync(async () =>
+                {
+                    return await context.Generos
+                                    .AnyAsync(g => g.Nombre.Equals(generoCreacionDTO.Nombre, StringComparison.CurrentCultureIgnoreCase));
+                });
 
                 if (generoExistente)
                 {
@@ -117,7 +126,7 @@ namespace PeliculasAPI.Controllers
 
                 // Agregar el nuevo género al contexto
                 context.Add(genero);
-                await context.SaveChangesAsync();
+                await RetryHelper.ExecuteWithRetryAsync(async () => await context.SaveChangesAsync());
 
                 // Invalidar la caché
                 await OutputCacheStore.EvictByTagAsync(ConstantesString.cacheTagGeneros, default);
@@ -147,7 +156,10 @@ namespace PeliculasAPI.Controllers
                     return BadRequest("El DTO de actualización de género no puede ser nulo.");
                 }
 
-                var generoExiste = await context.Generos.AnyAsync(g => g.Id == id);
+                var generoExiste = await RetryHelper.ExecuteWithRetryAsync(async () =>
+                {
+                    return await context.Generos.AnyAsync(g => g.Id == id);
+                });
 
                 if (!generoExiste)
                 {
@@ -159,7 +171,7 @@ namespace PeliculasAPI.Controllers
                 genero.Id = id;
 
                 context.Update(genero);
-                await context.SaveChangesAsync();
+                await RetryHelper.ExecuteWithRetryAsync(async () => await context.SaveChangesAsync());
                 await OutputCacheStore.EvictByTagAsync(ConstantesString.cacheTagGeneros, default);
 
                 Logger.LogInformation("Se actualizó el género con ID {Id}.", id);
@@ -177,9 +189,12 @@ namespace PeliculasAPI.Controllers
         {
             try
             {
-                var registrosBorrados = await context.Generos
-                    .Where(g => g.Id == id)
-                    .ExecuteDeleteAsync();
+                var registrosBorrados = await RetryHelper.ExecuteWithRetryAsync(async () =>
+                {
+                    return await context.Generos
+                                    .Where(g => g.Id == id)
+                                    .ExecuteDeleteAsync();
+                });
 
                 if (registrosBorrados == 0)
                 {

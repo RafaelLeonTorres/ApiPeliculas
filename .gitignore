@@ -20,3 +20,4 @@
 /.vs/PeliculasAPI/v17/.suo
 /.vs/PeliculasAPI/v17/DocumentLayout.backup.json
 /.vs/PeliculasAPI/v17/DocumentLayout.json
+**/appsettings.Development.json
